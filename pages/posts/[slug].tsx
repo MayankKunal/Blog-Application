@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { formatDate } from '@/lib/utils';
@@ -12,13 +13,9 @@ export default function PostPage() {
   const [post, setPost] = useState<IPostPlain | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (slug) {
-      fetchPost();
-    }
-  }, [slug]);
-
-  const fetchPost = async () => {
+  const fetchPost = useCallback(async () => {
+    if (!slug) return;
+    
     try {
       const res = await fetch(`/api/posts/${slug}`);
       const data = await res.json();
@@ -33,7 +30,13 @@ export default function PostPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [slug, router]);
+
+  useEffect(() => {
+    if (slug) {
+      fetchPost();
+    }
+  }, [slug, fetchPost]);
 
   if (loading) {
     return (
@@ -55,10 +58,12 @@ export default function PostPage() {
       {/* Hero Image Section */}
       {post.coverImage && (
         <div className="relative h-96 overflow-hidden">
-          <img
+          <Image
             src={post.coverImage}
             alt={post.title}
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
+            priority
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
         </div>

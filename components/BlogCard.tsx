@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { formatDate } from '@/lib/utils';
 import { IPostPlain } from '@/models/Post';
 
@@ -12,10 +13,11 @@ export default function BlogCard({ post }: BlogCardProps) {
       <article className="card h-full group cursor-pointer">
         {post.coverImage && (
           <div className="relative h-48 overflow-hidden">
-            <img
+            <Image
               src={post.coverImage}
               alt={post.title}
-              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+              fill
+              className="object-cover group-hover:scale-110 transition-transform duration-500"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
           </div>

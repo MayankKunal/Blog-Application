@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import BlogCard from '@/components/BlogCard';
 import { IPostPlain } from '@/models/Post';
 
@@ -50,9 +51,9 @@ export default function Home() {
             <div className="text-6xl mb-4">📝</div>
             <h2 className="text-3xl font-bold text-gray-800 mb-4">No posts yet</h2>
             <p className="text-gray-600 mb-8">Be the first to share your story!</p>
-            <a href="/create" className="btn-primary inline-block">
+            <Link href="/create" className="btn-primary inline-block">
               Create Your First Post
-            </a>
+            </Link>
           </div>
         ) : (
           <>
