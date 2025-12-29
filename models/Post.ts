@@ -7,6 +7,7 @@ export interface IPost extends Document {
   content: string;
   excerpt: string;
   author: string;
+  authorId?: mongoose.Types.ObjectId;
   coverImage?: string;
   published: boolean;
   createdAt: Date;
@@ -20,6 +21,7 @@ export interface IPostPlain {
   content: string;
   excerpt: string;
   author: string;
+  authorId?: string | mongoose.Types.ObjectId;
   coverImage?: string;
   published: boolean;
   createdAt: string | Date;
